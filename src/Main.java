@@ -94,7 +94,7 @@ public class Main {
 //          System.out.println("months "+curr);
 //       }
 
-       ArrayList<Integer> priceValues = prices.getValues(monthsIndexes);
+       ArrayList<Double> priceValues = prices.getValues(monthsIndexes);
 
        System.out.println("Minimum price is " +
                db.getMinPrice(priceValues));

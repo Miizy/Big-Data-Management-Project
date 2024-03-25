@@ -9,16 +9,16 @@ class database {
     public database() {
         this.columns = new HashMap<>();
         this.allAreas = new HashMap<>();
-        allAreas.put('0',"Ang Mo Kio");
-        allAreas.put('1',"Bedok");
-        allAreas.put('2',"Bukit Batok");
-        allAreas.put('3',"Clementi");
-        allAreas.put('4',"Choa Chu Kang");
-        allAreas.put('5',"Hougang");
-        allAreas.put('6',"Jurong West");
-        allAreas.put('7',"Punggol");
-        allAreas.put('8',"Woodlands");
-        allAreas.put('9',"Yishun");
+        allAreas.put('0',"ANG MO KIO");
+        allAreas.put('1',"BEDOK");
+        allAreas.put('2',"BUKIT BATOK");
+        allAreas.put('3',"CLEMENTI");
+        allAreas.put('4',"CHOA CHU KANG");
+        allAreas.put('5',"HOUGANG");
+        allAreas.put('6',"JURONG WEST");
+        allAreas.put('7',"PUNGGOL");
+        allAreas.put('8',"WOODLANDS");
+        allAreas.put('9',"YISHUN");
     }
 
     public void addColumn(String columnName, column col) {
@@ -47,12 +47,12 @@ class database {
         return ans;
     }
 
-    public int getMinPrice (ArrayList<Integer> prices) {
+    public Double getMinPrice (ArrayList<Double> prices) {
         return Collections.min(prices);
     }
 
-    public double getAvg (ArrayList<Integer> prices) {
-        double average = prices.stream().mapToInt(val -> val).average().orElse(0.0);
+    public double getAvg (ArrayList<Double> prices) {
+        double average = prices.stream().mapToDouble(val -> val).average().orElse(0.0);
         return average;
     }
     // Other methods for database operations
