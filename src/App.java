@@ -27,46 +27,46 @@ public class App {
 
         // System.out.println("Average price is " +
         //         db.getAvg(priceValues));
-        db.calculateStatistics('875');
+        db.calculateStatistics("875");
     }
 
-    public static Map<String, String[]> readCSV(String filePath) {
-        Map<String, String[]> columnData = new HashMap<>();
-        int lineCount = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            while ((br.readLine()) != null) {
-                lineCount++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        lineCount--;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            boolean isFirstLine = true;
-            String[] headers = null;
-            int currentLine = 0;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                if (isFirstLine) {
-                    headers = values;
-                    for (String header : headers) {
-                        columnData.put(header, new String[lineCount]);
-                    }
-                    isFirstLine = false;
-                } else {
-                    for (int i = 0; i < values.length; i++) {
-                        columnData.get(headers[i])[currentLine] = values[i];
-                    }
-                    currentLine++;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return columnData;
-    }
+//    public static Map<String, String[]> readCSV(String filePath) {
+//        Map<String, String[]> columnData = new HashMap<>();
+//        int lineCount = 0;
+//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+//            while ((br.readLine()) != null) {
+//                lineCount++;
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        lineCount--;
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+//            String line;
+//            boolean isFirstLine = true;
+//            String[] headers = null;
+//            int currentLine = 0;
+//            while ((line = br.readLine()) != null) {
+//                String[] values = line.split(",");
+//                if (isFirstLine) {
+//                    headers = values;
+//                    for (String header : headers) {
+//                        columnData.put(header, new String[lineCount]);
+//                    }
+//                    isFirstLine = false;
+//                } else {
+//                    for (int i = 0; i < values.length; i++) {
+//                        columnData.get(headers[i])[currentLine] = values[i];
+//                    }
+//                    currentLine++;
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return columnData;
+//    }
 
     public static void readCSV(String filePath, database db) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

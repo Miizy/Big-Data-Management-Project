@@ -34,10 +34,11 @@ class database {
         ans[0] = allAreas.get(query.charAt(0));
         int month = Character.getNumericValue(query.charAt(1));
         Character year = query.charAt(2);
+        String startYear;
         if (year <= '3') {
-            startYear = '202'
+            startYear = "202";
         } else {
-            startYear = '201'
+            startYear = "201";
         }
         if (month == 0) {
             ans[1] = (startYear+year+"-10");
@@ -70,8 +71,8 @@ class database {
         
         column<String> months = (column<String>)columns.get("month");
         column<String> towns = (column<String>)columns.get("town");
-        column<Double> floorAreaSqm = (column<Double>)columns.get("floor_area_sqm");
-        column<Double> resalePrice = (column<Double>)columns.get("resale_price");
+        column<Double> floorAreaSqm = (column<Double>)columns.get("floorAreaSqm");
+        column<Double> resalePrice = (column<Double>)columns.get("resalePrice");
         
         ArrayList<Integer> validIndices = new ArrayList<>();
         for (int i = 0; i < months.getSize(); i++) {
