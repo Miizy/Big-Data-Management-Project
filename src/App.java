@@ -15,18 +15,19 @@ public class App {
         database db = new database();
         readCSV("ResalePricesSingapore.csv", db);
         String[] queries = db.getQuery("875");
-        int[] areaIndexes = db.getColumn("town").getIndexesSorted(queries[0]);
-        ArrayList monthsIndexes = db.getColumn("month").getMonthsIndexes(Arrays.copyOfRange(queries, 1, 4), areaIndexes);
-        ArrayList<Double> priceValues = db.getColumn("resalePrice").getValues(monthsIndexes);
+        // int[] areaIndexes = db.getColumn("town").getIndexesSorted(queries[0]);
+        // ArrayList monthsIndexes = db.getColumn("month").getMonthsIndexes(Arrays.copyOfRange(queries, 1, 4), areaIndexes);
+        // ArrayList<Double> priceValues = db.getColumn("resalePrice").getValues(monthsIndexes);
 
         System.out.println("Statistic for resale flats in " +
                 queries[0] + " from " + queries[1] + " to " +queries[3]);
 
-        System.out.println("Minimum price is " +
-                db.getMinPrice(priceValues));
+        // System.out.println("Minimum price is " +
+        //         db.getMinPrice(priceValues));
 
-        System.out.println("Average price is " +
-                db.getAvg(priceValues));
+        // System.out.println("Average price is " +
+        //         db.getAvg(priceValues));
+        db.calculateStatistics('875');
     }
 
     public static Map<String, String[]> readCSV(String filePath) {
@@ -71,13 +72,13 @@ public class App {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             column<String> month = new column<>();
             column<String> town = new column<>();
-            column<String> flatType = new column<>();
-            column<String> block = new column<>();
-            column<String> streetName = new column<>();
-            column<String> storeyRange = new column<>();
+            // column<String> flatType = new column<>();
+            // column<String> block = new column<>();
+            // column<String> streetName = new column<>();
+            // column<String> storeyRange = new column<>();
             column<Double> floorAreaSqm = new column<>();
-            column<String> flatModel = new column<>();
-            column<Integer> leaseCommenceDate = new column<>();
+            // column<String> flatModel = new column<>();
+            // column<Integer> leaseCommenceDate = new column<>();
             column<Double> resalePrice = new column<>();
 
             String line;
@@ -86,24 +87,24 @@ public class App {
                 String[] values = line.split(",");
                 month.addValue(values[0]);
                 town.addValue(values[1]);
-                flatType.addValue(values[2]);
-                block.addValue(values[3]);
-                streetName.addValue(values[4]);
-                storeyRange.addValue(values[5]);
+                // flatType.addValue(values[2]);
+                // block.addValue(values[3]);
+                // streetName.addValue(values[4]);
+                // storeyRange.addValue(values[5]);
                 floorAreaSqm.addValue(Double.parseDouble(values[6]));
-                flatModel.addValue(values[7]);
-                leaseCommenceDate.addValue(Integer.parseInt(values[8]));
+                // flatModel.addValue(values[7]);
+                // leaseCommenceDate.addValue(Integer.parseInt(values[8]));
                 resalePrice.addValue(Double.parseDouble(values[9]));
             }
             db.addColumn("month", month);
             db.addColumn("town", town);
-            db.addColumn("flatType", flatType);
-            db.addColumn("block", block);
-            db.addColumn("streetName", streetName);
-            db.addColumn("storeyRange", storeyRange);
+            // db.addColumn("flatType", flatType);
+            // db.addColumn("block", block);
+            // db.addColumn("streetName", streetName);
+            // db.addColumn("storeyRange", storeyRange);
             db.addColumn("floorAreaSqm", floorAreaSqm);
-            db.addColumn("flatModel", flatModel);
-            db.addColumn("leaseCommenceDate", leaseCommenceDate);
+            // db.addColumn("flatModel", flatModel);
+            // db.addColumn("leaseCommenceDate", leaseCommenceDate);
             db.addColumn("resalePrice", resalePrice);
         } catch (IOException e) {
             e.printStackTrace();
