@@ -14,10 +14,13 @@ public class App {
 
         database db = new database();
         readCSV("ResalePricesSingapore.csv", db);
-        String[] queries = db.getQuery("908");
+        String[] queries = db.getQuery("875");
         int[] areaIndexes = db.getColumn("town").getIndexesSorted(queries[0]);
         ArrayList monthsIndexes = db.getColumn("month").getMonthsIndexes(Arrays.copyOfRange(queries, 1, 4), areaIndexes);
         ArrayList<Double> priceValues = db.getColumn("resalePrice").getValues(monthsIndexes);
+
+        System.out.println("Statistic for resale flats in " +
+                queries[0] + " from " + queries[1] + " to " +queries[3]);
 
         System.out.println("Minimum price is " +
                 db.getMinPrice(priceValues));

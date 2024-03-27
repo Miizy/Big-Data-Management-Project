@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 class database {
     private HashMap<String, column> columns;
-    private HashMap<Character, String> allAreas;
+    public HashMap<Character, String> allAreas;
 
     public database() {
         this.columns = new HashMap<>();
