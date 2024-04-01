@@ -1,15 +1,14 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         // Map<String, String[]> columnData = readCSV("ResalePricesSingapore.csv");
         // String[] monthColumn = columnData.get("month");
 
@@ -19,17 +18,29 @@ public class App {
         Scanner sc= new Scanner(System.in); //System.in is a standard input stream
         System.out.print("Enter 3 number query: ");
         String query= sc.nextLine();
-        db.calculateStatistics(query);
+        System.out.print("""
+                Enter statistic to calculate
+                1. Min area
+                2. Min price
+                3. Avg area
+                4. Avg price
+                5. Std Dev area
+                6. Std Dev price
+                """);
+        Character stat = sc.next().charAt(0);
 
 
-        // int[] areaIndexes = db.getColumn("town").getIndexesSorted(queries[0]);
-        // ArrayList monthsIndexes = db.getColumn("month").getMonthsIndexes(Arrays.copyOfRange(queries, 1, 4), areaIndexes);
-        // ArrayList<Double> priceValues = db.getColumn("resalePrice").getValues(monthsIndexes)
-        // System.out.println("Minimum price is " +
-        //         db.getMinPrice(priceValues));
+        String[] query_ans = db.calculateStatistics(query, stat);
 
-        // System.out.println("Average price is " +
-        //         db.getAvg(priceValues));
+        ArrayList<String[]> dataLines = new ArrayList<>();
+        dataLines.add(query_ans);
+
+        File csvOutputFile = new File("output.csv");
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            dataLines.stream()
+                    .map(App::convertToCSV)
+                    .forEach(pw::println);
+        }
 
     }
 
@@ -70,6 +81,11 @@ public class App {
 //        }
 //        return columnData;
 //    }
+
+    public static String convertToCSV(String[] data) {
+        return Stream.of(data)
+                .collect(Collectors.joining(","));
+    }
 
     public static void readCSV(String filePath, database db) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

@@ -5,6 +5,7 @@ import java.util.HashMap;
 class database {
     private HashMap<String, column> columns;
     public HashMap<Character, String> allAreas;
+    public HashMap<Character, String> allStats;
 
     public database() {
         this.columns = new HashMap<>();
@@ -19,6 +20,13 @@ class database {
         allAreas.put('7',"PUNGGOL");
         allAreas.put('8',"WOODLANDS");
         allAreas.put('9',"YISHUN");
+        this.allStats = new HashMap<>();
+        allStats.put('1',"Minimum area");
+        allStats.put('2',"Minimum price");
+        allStats.put('3',"Average area");
+        allStats.put('4',"Average price");
+        allStats.put('5',"Stddev area");
+        allStats.put('6',"Stddev price");
     }
 
     public void addColumn(String columnName, column col) {
@@ -63,7 +71,7 @@ class database {
     }
     // Other methods for database operations
 
-    public void calculateStatistics(String query) {
+    public String[] calculateStatistics(String query, Character choice) {
         String[] queryDetails = getQuery(query);
         String queryTown = queryDetails[0];
         String monthStart = queryDetails[1];
@@ -87,20 +95,50 @@ class database {
         ArrayList<Double> areaList = floorAreaSqm.getValues(validIndices);
         ArrayList<Double> priceList = resalePrice.getValues(validIndices);
 
-        double minArea = Collections.min(areaList);
-        double minPrice = Collections.min(priceList);
-        double avgArea = areaList.stream().mapToDouble(val -> val).average().orElse(0.0);
-        double avgPrice = priceList.stream().mapToDouble(val -> val).average().orElse(0.0);
-        double stdDevArea = calculateStandardDeviation(areaList, avgArea);
-        double stdDevPrice = calculateStandardDeviation(priceList, avgPrice);
+        double stat = 0;
+        switch (choice) {
+            case '1': // minimum area
+                stat = Collections.min(areaList);
+                break;
+            case '2': // minimum price
+                stat = Collections.min(priceList);
+                break;
+            case '3': // avg area
+                stat = areaList.stream().mapToDouble(val -> val).average().orElse(0.0);
+                break;
+            case '4': // avg price
+                stat = priceList.stream().mapToDouble(val -> val).average().orElse(0.0);
+                break;
+            case '5': // std dev area
+                stat = calculateStandardDeviation(areaList, areaList.stream().mapToDouble(val -> val).average().orElse(0.0));
+                break;
+            case '6': // std dev price
+                stat = calculateStandardDeviation(priceList, priceList.stream().mapToDouble(val -> val).average().orElse(0.0));
+                break;
+        }
+//        double minArea = Collections.min(areaList);
+//        double minPrice = Collections.min(priceList);
+//        double avgArea = areaList.stream().mapToDouble(val -> val).average().orElse(0.0);
+//        double avgPrice = priceList.stream().mapToDouble(val -> val).average().orElse(0.0);
+//        double stdDevArea = calculateStandardDeviation(areaList, avgArea);
+//        double stdDevPrice = calculateStandardDeviation(priceList, avgPrice);
 
-        System.out.println("Statistics for " + queryTown + " from " + monthStart + " to " + monthEnd + ":");
-        System.out.println("Min Floor Area: " + minArea);
-        System.out.println("Min Price: " + minPrice);
-        System.out.println("Average Floor Area: " + avgArea);
-        System.out.println("Average Price: " + avgPrice);
-        System.out.println("Standard Deviation of Floor Area: " + stdDevArea);
-        System.out.println("Standard Deviation of Price: " + stdDevPrice);
+        String[] ans = new String[]{
+                monthStart.substring(0,4),
+                monthStart.substring(5,7),
+                queryTown,
+                allStats.get(choice),
+                String.format("%.2f", stat)
+        };
+
+        return ans;
+//        System.out.println("Statistics for " + queryTown + " from " + monthStart + " to " + monthEnd + ":");
+//        System.out.println("Min Floor Area: " + minArea);
+//        System.out.println("Min Price: " + minPrice);
+//        System.out.println("Average Floor Area: " + avgArea);
+//        System.out.println("Average Price: " + avgPrice);
+//        System.out.println("Standard Deviation of Floor Area: " + stdDevArea);
+//        System.out.println("Standard Deviation of Price: " + stdDevPrice);
     }
 
     private double calculateStandardDeviation(ArrayList<Double> list, double mean) {
