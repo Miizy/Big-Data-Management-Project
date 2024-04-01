@@ -1,6 +1,6 @@
 year,month,town,category,value
-2017,02,CLEMENTI,Minimum area,61
-2017,02,CLEMENTI,Minimum price,250000
+2017,02,CLEMENTI,Minimum area,61.00
+2017,02,CLEMENTI,Minimum price,250000.00
 2017,02,CLEMENTI,Average area,86.53
 2017,02,CLEMENTI,Average price,474283.97
 2017,02,CLEMENTI,Stddev area,20.04
