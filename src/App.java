@@ -46,6 +46,8 @@ public class App {
                     .forEach(pw::println);
         }
 
+        System.out.print("Output file created");
+
     }
 
 //    public static Map<String, String[]> readCSV(String filePath) {
