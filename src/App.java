@@ -18,14 +18,13 @@ public class App {
         Scanner sc= new Scanner(System.in); //System.in is a standard input stream
         ArrayList<String[]> dataLines = new ArrayList<>();
         dataLines.add(new String[] {"year","month","town","category","value"});
+        System.out.print("Enter matric number\n");
+        String matric = sc.nextLine();
+        String query = matric.substring(5,8);
 
         while(true) {
-            System.out.print("Enter 3 number query or -1 to stop\n");
-            String query= sc.nextLine();
-            if(query.equals("-1")) {break;}
-
             System.out.print("""
-                Enter statistic to calculate
+                Enter statistic to calculate or 0 to stop
                 1. Min area
                 2. Min price
                 3. Avg area
@@ -34,11 +33,13 @@ public class App {
                 6. Std Dev price
                 """);
             Character stat = sc.nextLine().charAt(0);
+            if(stat=='0') {break;}
             String[] query_ans = db.calculateStatistics(query, stat);
             dataLines.add(query_ans);
         }
 
-        File csvOutputFile = new File("output.csv");
+
+        File csvOutputFile = new File(String.join("","ScanResult_",matric,".csv"));
         try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
             dataLines.stream()
                     .map(App::convertToCSV)
