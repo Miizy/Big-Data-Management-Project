@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,20 +15,22 @@ public class App {
 
         database db = new database();
         readCSV("ResalePricesSingapore.csv", db);
-        String[] queries = db.getQuery("875");
+
+        Scanner sc= new Scanner(System.in); //System.in is a standard input stream
+        System.out.print("Enter 3 number query: ");
+        String query= sc.nextLine();
+        db.calculateStatistics(query);
+
+
         // int[] areaIndexes = db.getColumn("town").getIndexesSorted(queries[0]);
         // ArrayList monthsIndexes = db.getColumn("month").getMonthsIndexes(Arrays.copyOfRange(queries, 1, 4), areaIndexes);
-        // ArrayList<Double> priceValues = db.getColumn("resalePrice").getValues(monthsIndexes);
-
-        System.out.println("Statistic for resale flats in " +
-                queries[0] + " from " + queries[1] + " to " +queries[3]);
-
+        // ArrayList<Double> priceValues = db.getColumn("resalePrice").getValues(monthsIndexes)
         // System.out.println("Minimum price is " +
         //         db.getMinPrice(priceValues));
 
         // System.out.println("Average price is " +
         //         db.getAvg(priceValues));
-        db.calculateStatistics("875");
+
     }
 
 //    public static Map<String, String[]> readCSV(String filePath) {
