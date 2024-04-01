@@ -16,9 +16,15 @@ public class App {
         readCSV("ResalePricesSingapore.csv", db);
 
         Scanner sc= new Scanner(System.in); //System.in is a standard input stream
-        System.out.print("Enter 3 number query: ");
-        String query= sc.nextLine();
-        System.out.print("""
+        ArrayList<String[]> dataLines = new ArrayList<>();
+        dataLines.add(new String[] {"year","month","town","category","value"});
+
+        while(true) {
+            System.out.print("Enter 3 number query or -1 to stop\n");
+            String query= sc.nextLine();
+            if(query.equals("-1")) {break;}
+
+            System.out.print("""
                 Enter statistic to calculate
                 1. Min area
                 2. Min price
@@ -27,13 +33,10 @@ public class App {
                 5. Std Dev area
                 6. Std Dev price
                 """);
-        Character stat = sc.next().charAt(0);
-
-
-        String[] query_ans = db.calculateStatistics(query, stat);
-
-        ArrayList<String[]> dataLines = new ArrayList<>();
-        dataLines.add(query_ans);
+            Character stat = sc.nextLine().charAt(0);
+            String[] query_ans = db.calculateStatistics(query, stat);
+            dataLines.add(query_ans);
+        }
 
         File csvOutputFile = new File("output.csv");
         try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
