@@ -96,25 +96,29 @@ class database {
         ArrayList<Double> priceList = resalePrice.getValues(validIndices);
 
         double stat = 0;
-        switch (choice) {
-            case '1': // minimum area
-                stat = Collections.min(areaList);
-                break;
-            case '2': // minimum price
-                stat = Collections.min(priceList);
-                break;
-            case '3': // avg area
-                stat = areaList.stream().mapToDouble(val -> val).average().orElse(0.0);
-                break;
-            case '4': // avg price
-                stat = priceList.stream().mapToDouble(val -> val).average().orElse(0.0);
-                break;
-            case '5': // std dev area
-                stat = calculateStandardDeviation(areaList, areaList.stream().mapToDouble(val -> val).average().orElse(0.0));
-                break;
-            case '6': // std dev price
-                stat = calculateStandardDeviation(priceList, priceList.stream().mapToDouble(val -> val).average().orElse(0.0));
-                break;
+        String statFormatted = "Empty qualified entries";
+        if(!validIndices.isEmpty()){
+            switch (choice) {
+                case '1': // minimum area
+                    stat = Collections.min(areaList);
+                    break;
+                case '2': // minimum price
+                    stat = Collections.min(priceList);
+                    break;
+                case '3': // avg area
+                    stat = areaList.stream().mapToDouble(val -> val).average().orElse(0.0);
+                    break;
+                case '4': // avg price
+                    stat = priceList.stream().mapToDouble(val -> val).average().orElse(0.0);
+                    break;
+                case '5': // std dev area
+                    stat = calculateStandardDeviation(areaList, areaList.stream().mapToDouble(val -> val).average().orElse(0.0));
+                    break;
+                case '6': // std dev price
+                    stat = calculateStandardDeviation(priceList, priceList.stream().mapToDouble(val -> val).average().orElse(0.0));
+                    break;
+            }
+            statFormatted = String.format("%.2f", stat);
         }
 //        double minArea = Collections.min(areaList);
 //        double minPrice = Collections.min(priceList);
@@ -128,7 +132,7 @@ class database {
                 monthStart.substring(5,7),
                 queryTown,
                 allStats.get(choice),
-                String.format("%.2f", stat)
+                statFormatted
         };
 
         return ans;
