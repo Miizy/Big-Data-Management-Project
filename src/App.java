@@ -11,13 +11,13 @@ public class App {
     public static void main(String[] args) throws FileNotFoundException {
         // Map<String, String[]> columnData = readCSV("ResalePricesSingapore.csv");
         // String[] monthColumn = columnData.get("month");
-
         database db = new database();
         readCSV("ResalePricesSingapore.csv", db);
 
-        Scanner sc= new Scanner(System.in); //System.in is a standard input stream
         ArrayList<String[]> dataLines = new ArrayList<>();
         dataLines.add(new String[] {"year","month","town","category","value"});
+
+        Scanner sc= new Scanner(System.in); //System.in is a standard input stream
         System.out.print("Enter matric number\n");
         String matric = sc.nextLine();
         String query = matric.substring(5,8);
@@ -25,12 +25,12 @@ public class App {
         while(true) {
             System.out.print("""
                 Enter statistic to calculate or 0 to stop
-                1. Min area
-                2. Min price
-                3. Avg area
-                4. Avg price
-                5. Std Dev area
-                6. Std Dev price
+                1. Minimum area
+                2. Minimum price
+                3. Average area
+                4. Average price
+                5. Standard Deviation of area
+                6. Standard Deviation of price
                 """);
             Character stat = sc.nextLine().charAt(0);
             if(stat=='0') {break;}

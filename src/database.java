@@ -25,8 +25,8 @@ class database {
         allStats.put('2',"Minimum price");
         allStats.put('3',"Average area");
         allStats.put('4',"Average price");
-        allStats.put('5',"Stddev area");
-        allStats.put('6',"Stddev price");
+        allStats.put('5',"Standard deviation of area");
+        allStats.put('6',"Standard deviation of price");
     }
 
     public void addColumn(String columnName, column col) {
