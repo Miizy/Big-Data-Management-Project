@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,10 +36,6 @@ class database {
         columns.put(columnName, col);
     }
 
-    public column getColumn(String columnName) {
-        return columns.get(columnName);
-    }
-
     public String[] getQuery(String query) {
         String[] ans = new String[4];
         ans[0] = allAreas.get(query.charAt(0));
@@ -60,16 +59,6 @@ class database {
         }
         return ans;
     }
-
-    public Double getMinPrice (ArrayList<Double> prices) {
-        return Collections.min(prices);
-    }
-
-    public double getAvg (ArrayList<Double> prices) {
-        double average = prices.stream().mapToDouble(val -> val).average().orElse(0.0);
-        return average;
-    }
-    // Other methods for database operations
 
     public String[] calculateStatistics(String query, Character choice) {
         String[] queryDetails = getQuery(query);
@@ -120,12 +109,6 @@ class database {
             }
             statFormatted = String.format("%.2f", stat);
         }
-//        double minArea = Collections.min(areaList);
-//        double minPrice = Collections.min(priceList);
-//        double avgArea = areaList.stream().mapToDouble(val -> val).average().orElse(0.0);
-//        double avgPrice = priceList.stream().mapToDouble(val -> val).average().orElse(0.0);
-//        double stdDevArea = calculateStandardDeviation(areaList, avgArea);
-//        double stdDevPrice = calculateStandardDeviation(priceList, avgPrice);
 
         String[] ans = new String[]{
                 monthStart.substring(0,4),
@@ -136,13 +119,6 @@ class database {
         };
 
         return ans;
-//        System.out.println("Statistics for " + queryTown + " from " + monthStart + " to " + monthEnd + ":");
-//        System.out.println("Min Floor Area: " + minArea);
-//        System.out.println("Min Price: " + minPrice);
-//        System.out.println("Average Floor Area: " + avgArea);
-//        System.out.println("Average Price: " + avgPrice);
-//        System.out.println("Standard Deviation of Floor Area: " + stdDevArea);
-//        System.out.println("Standard Deviation of Price: " + stdDevPrice);
     }
 
     private double calculateStandardDeviation(ArrayList<Double> list, double mean) {
@@ -150,5 +126,30 @@ class database {
         for (double a : list)
             temp += (mean - a) * (mean - a);
         return Math.sqrt(temp / list.size());
+    }
+
+    public void readCSV(String filePath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            column<String> month = new column<>();
+            column<String> town = new column<>();
+            column<Double> floorAreaSqm = new column<>();
+            column<Double> resalePrice = new column<>();
+
+            String line;
+            br.readLine(); // skip header line
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                month.addValue(values[0]);
+                town.addValue(values[1]);
+                floorAreaSqm.addValue(Double.parseDouble(values[6]));
+                resalePrice.addValue(Double.parseDouble(values[9]));
+            }
+            addColumn("month", month);
+            addColumn("town", town);
+            addColumn("floorAreaSqm", floorAreaSqm);
+            addColumn("resalePrice", resalePrice);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
