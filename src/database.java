@@ -24,12 +24,12 @@ class database {
         allAreas.put('8',"WOODLANDS");
         allAreas.put('9',"YISHUN");
         this.allStats = new HashMap<>();
-        allStats.put('1',"Minimum area");
-        allStats.put('2',"Minimum price");
-        allStats.put('3',"Average area");
-        allStats.put('4',"Average price");
-        allStats.put('5',"Standard deviation of area");
-        allStats.put('6',"Standard deviation of price");
+        allStats.put('1',"Minimum Area");
+        allStats.put('2',"Minimum Price");
+        allStats.put('3',"Average Area");
+        allStats.put('4',"Average Price");
+        allStats.put('5',"Standard Deviation of Area");
+        allStats.put('6',"Standard Deviation of Price");
     }
 
     public void addColumn(String columnName, column col) {
